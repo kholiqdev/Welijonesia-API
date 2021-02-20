@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,7 +24,6 @@ class UserFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
-            'wallet_id' => Wallet::factory(),
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'verified_at' => now(),

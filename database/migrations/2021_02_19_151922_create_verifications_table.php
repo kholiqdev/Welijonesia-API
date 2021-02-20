@@ -16,7 +16,7 @@ class CreateVerificationsTable extends Migration
         Schema::create('verifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedTinyInteger('code');
+            $table->unsignedMediumInteger('code');
             $table->timestamp('expired_at');
 
             $table->softDeletes();

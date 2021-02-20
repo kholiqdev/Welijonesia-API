@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ class WalletFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
+            'user_id' => User::factory(),
             'balance' => $this->faker->randomNumber(8),
             'last_withdrawal' => now(),
             'last_deposit' => now(),

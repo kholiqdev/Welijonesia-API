@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers\Customer\Auth;
+
+use App\Helpers\ResponseFormatter;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\Auth\RegisterRequest;
+use App\Models\User;
+use App\Models\Verification;
+use App\Models\Wallet;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+class RegisterController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function __invoke(RegisterRequest $request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $user = User::create([
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'customer',
+            ]);
+
+            Wallet::create([
+                'user_id' => $user->id,
+                'balance' => 10000
+            ]);
+
+            Verification::create([
+                'user_id' => $user->id,
+                'code' => random_int(000000, 999999),
+            ]);
+
+            DB::commit();
+
+            if ($token = JWTAuth::fromUser($user)) {
+                return ResponseFormatter::success(['token' => $token], 'Registrasi sukses, harap aktivasi akun anda!');
+            }
+
+            return ResponseFormatter::error("Registrasi gagal, harap periksa kembali!", 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            DB::rollBack();
+
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
+    }
+}

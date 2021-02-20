@@ -15,6 +15,7 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->unique()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('balance')->default(0);
             $table->timestamp('last_withdrawal')->nullable();
             $table->timestamp('last_deposit')->nullable();

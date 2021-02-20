@@ -15,12 +15,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('wallet_id')->constrained('wallets')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('phone')->nullable();
+            $table->unsignedBigInteger('phone');
             $table->unsignedBigInteger('whatsapp')->nullable();
             $table->enum('gender', ['L', 'P'])->comment('L=Laki-laki,P=Perempuan');
             $table->string('picturePath')->nullable();
