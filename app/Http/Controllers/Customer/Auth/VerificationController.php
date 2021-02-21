@@ -21,10 +21,11 @@ class VerificationController extends Controller
     {
 
         $verification = auth()->user()->verifications->where('expired_at', '>', now())->first();
-
+        
         if ($verification && $verification->code == $request->code) {
             try {
                 auth()->user()->update([
+                    'verified_at' => now(),
                     'status' => 1
                 ]);
 

@@ -1,7 +1,7 @@
 @component('mail::message')
-# Activation your account
+# Aktivasi Akun
 
-Thanks for signing up, please activate your account.
+Terima kasih telah mendaftar, harap aktivasi akun anda.
 
 @component('mail::panel')
 {{$verification->code}}

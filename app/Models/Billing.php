@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Billing extends Model
 {
-    use HasFactory;
-
-    public $incrementing = false;
+    use HasFactory, UsesUuid;
 }
