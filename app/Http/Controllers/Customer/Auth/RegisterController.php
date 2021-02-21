@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Customer\Auth;
 
+use App\Events\UserRegistered;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\Auth\RegisterRequest;
+use App\Jobs\SendEmailActivation;
 use App\Models\User;
 use App\Models\Verification;
 use App\Models\Wallet;
@@ -17,15 +19,14 @@ class RegisterController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  RegisterRequest  $request
+     * @return json
      */
     public function __invoke(RegisterRequest $request)
     {
         DB::beginTransaction();
 
         try {
-
             $user = User::create([
                 'name' => $request->name,
                 'gender' => $request->gender,
@@ -44,6 +45,9 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'code' => random_int(000000, 999999),
             ]);
+
+            // SendEmailActivation::dispatch($user);
+            event(new UserRegistered($user));
 
             DB::commit();
 

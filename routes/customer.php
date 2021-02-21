@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\RegisterController;
+use App\Http\Controllers\Customer\Auth\VerificationController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', RegisterController::class);
+Route::post('register', RegisterController::class);
+Route::post('login', LoginController::class);
+
+Route::group(['middleware' => 'auth.api:api'], function () {
+    Route::post('verification', VerificationController::class);
+});

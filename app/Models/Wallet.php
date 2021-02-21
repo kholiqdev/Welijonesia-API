@@ -10,7 +10,10 @@ class Wallet extends Model
 {
     use HasFactory, UsesUuid;
 
-    public $incrementing = false;
-
+    /**
+     * The attributes that cannot mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 }

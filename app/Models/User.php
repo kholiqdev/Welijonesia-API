@@ -9,10 +9,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasFactory, Notifiable, UsesUuid;
 
+    /**
+     * The attributes that cannot mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     /**
@@ -31,15 +36,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public const VALIDATION_RULES = [
-        'name' => 'required|string|min:3',
-        'gender' => 'required|string|max:1|in:L,P',
-        'phone' => 'required|numeric|min:10',
-        'email' => 'required|string|email|min:5|unique:users',
-        'password' => 'required|string|max:255|min:6|confirmed',
+        'verified_at' => 'datetime',
     ];
 
     /**
@@ -64,5 +61,15 @@ class User extends Authenticatable implements JWTSubject
             'name'      => $this->name,
             'email'           => $this->email
         ];
+    }
+
+    /**
+     * Define relationship with the verification
+     *
+     * @return void
+     */
+    public function verifications()
+    {
+        return $this->hasMany(Verification::class);
     }
 }
