@@ -43,7 +43,7 @@ class RegisterController extends Controller
 
             Verification::create([
                 'user_id' => $user->id,
-                'code' => random_int(000000, 999999),
+                'code' => random_int(0000, 9999),
             ]);
 
             // SendEmailActivation::dispatch($user);

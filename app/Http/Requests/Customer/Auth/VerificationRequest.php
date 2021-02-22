@@ -16,7 +16,7 @@ class VerificationRequest extends FormRequest
      * @var array
      */
     protected const VALIDATION_RULES = [
-        'code' => 'required|numeric|min:6',
+        'code' => 'required|numeric|min:4',
     ];
 
     /**
