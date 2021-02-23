@@ -3,6 +3,7 @@
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
 use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\RegisterController;
+use App\Http\Controllers\Customer\Auth\ResendController;
 use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
 use App\Http\Controllers\Customer\SellerController;
@@ -27,4 +28,5 @@ Route::get('seller', [SellerController::class, 'index'])->name('customer.get-sel
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
+    Route::post('resend', ResendController::class)->name('customer.resend-verification');
 });

@@ -27,7 +27,7 @@ class SellerFactory extends Factory
             'user_id' => User::factory(),
             'name' => $this->faker->name,
             'type' => $this->faker->randomElement(['keliling', 'mangkal', 'campuran']),
-            'picturePath' => $this->faker->md5 . '.png',
+            'picturePath' => $this->faker->imageUrl(240, 240, 'foods'),
             'rate' => $this->faker->numberBetween(0, 5),
             'favorit' => $this->faker->numberBetween(10, 1000),
             'active' => 1,
