@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         ProductDetail::factory(5)->create();
         ProductUnit::factory(5)->create();
         Rute::factory(5)->create();
-        RuteDetail::factory(5)->create();
+        RuteDetail::factory(100)->create();
         Seller::factory(5)->create();
         Review::factory(5)->create();
     }

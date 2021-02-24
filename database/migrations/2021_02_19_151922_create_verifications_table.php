@@ -17,6 +17,7 @@ class CreateVerificationsTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedMediumInteger('code');
+            $table->enum('via', ['email', 'sms']);
             $table->timestamp('expired_at');
 
             $table->softDeletes();

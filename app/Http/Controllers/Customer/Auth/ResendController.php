@@ -29,7 +29,8 @@ class ResendController extends Controller
 
                 Verification::create([
                     'user_id' => auth()->user()->id,
-                    'code' => random_int(0000, 9999),
+                    'code' => rand(0000, 9999),
+                    'via' => 'email',
                 ]);
 
                 // SendEmailActivation::dispatch($user);

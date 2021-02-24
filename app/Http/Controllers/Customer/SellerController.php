@@ -31,7 +31,7 @@ class SellerController extends Controller
 
             $seller->with(['user', 'rutedetails.rute'])->where('active', '=', 1);
 
-            if ($request->has('type')) $seller->where('type', 'like', '%' . $request->type . '%');
+            if ($request->has('type')) $seller->where('type', $request->type);
 
             if ($request->has('rute')) $seller->whereHas('ruteDetails', function ($q) {
                 $q->where('rute_id', request('rute'));
