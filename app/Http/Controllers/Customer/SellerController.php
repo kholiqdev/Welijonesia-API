@@ -42,7 +42,7 @@ class SellerController extends Controller
             return ResponseFormatter::success(
                 ['seller' => $seller->paginate($limit)],
 
-                $seller->count() . ' Seller ditemukan'
+                $seller->count() . ' penjual ditemukan'
             );
         } catch (QueryException $e) {
             return ResponseFormatter::error($e->getMessage(), 400);

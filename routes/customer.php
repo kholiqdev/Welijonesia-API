@@ -6,6 +6,7 @@ use App\Http\Controllers\Customer\Auth\RegisterController;
 use App\Http\Controllers\Customer\Auth\ResendController;
 use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
+use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::post('login', LoginController::class)->name('customer.login');
 Route::post('forgot-password', ForgotPasswordController::class)->name('customer.forgot-password');
 Route::post('reset-password', ResetPassword::class)->name('customer.reset-password');
 Route::get('seller', [SellerController::class, 'index'])->name('customer.get-seller');
+Route::get('review', [ReviewController::class, 'index'])->name('customer.get-review');
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
