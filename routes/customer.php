@@ -6,6 +6,8 @@ use App\Http\Controllers\Customer\Auth\RegisterController;
 use App\Http\Controllers\Customer\Auth\ResendController;
 use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
+use App\Http\Controllers\Customer\FavoritContoller;
+use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +29,10 @@ Route::post('forgot-password', ForgotPasswordController::class)->name('customer.
 Route::post('reset-password', ResetPassword::class)->name('customer.reset-password');
 Route::get('seller', [SellerController::class, 'index'])->name('customer.get-seller');
 Route::get('review', [ReviewController::class, 'index'])->name('customer.get-review');
+Route::get('product', ProductController::class)->name('customer.get-produk');
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
     Route::post('resend', ResendController::class)->name('customer.resend-verification');
+    Route::post('favorit', [FavoritContoller::class, 'storeOrUpdate'])->name('customer.store-update-favorit');
 });

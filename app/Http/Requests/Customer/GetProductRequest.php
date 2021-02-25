@@ -5,7 +5,7 @@ namespace App\Http\Requests\Customer;
 use App\Http\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetReviewRequest extends FormRequest
+class GetProductRequest extends FormRequest
 {
     use FailedValidation;
     /**
@@ -14,8 +14,8 @@ class GetReviewRequest extends FormRequest
      * @var array
      */
     protected const VALIDATION_RULES = [
-        'seller_id' => 'required_without:product_id|string|min:35|max:37',
-        'product_id' => 'required_without:seller_id|string|min:35|max:37',
+        'id' => 'string|min:35|max:37',
+        'seller_id' => 'string|min:35|max:37',
         'limit' => 'numeric',
     ];
 

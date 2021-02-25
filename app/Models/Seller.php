@@ -11,6 +11,13 @@ class Seller extends Model
     use HasFactory, UsesUuid;
 
     /**
+     * The attributes that cannot mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * Define relationship with the user
      *
      * @return void
@@ -48,5 +55,15 @@ class Seller extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Define relationship with the favorit
+     *
+     * @return void
+     */
+    public function favorits()
+    {
+        return $this->hasMany(Favorit::class);
     }
 }
