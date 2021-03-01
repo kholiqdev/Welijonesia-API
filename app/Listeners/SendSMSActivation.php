@@ -25,7 +25,7 @@ class SendSMSActivation
      */
     public function handle(UserRegistered $event)
     {
-        if ($event->user->status == 0 && $event->user->verifications->where('expired_at', '>', now())->first() && $event->user->verifications->via == 'sms') {
+        if ($event->user->status == 0 && $event->user->verifications->where('expired_at', '>', now())->first() && $event->user->verifications->first()->via == 'sms') {
             try {
                 $userkey = '808fded6569b';
                 $passkey = '0b2544301396d8d2e38d50fc';

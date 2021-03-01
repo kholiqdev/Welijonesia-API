@@ -26,7 +26,7 @@ class ComodityFactory extends Factory
             'id' => $this->faker->uuid,
             'category_id' => Category::factory(),
             'name' => $this->faker->name,
-            'picturePath' => $this->faker->md5 . '.png',
+            'picturePath' => $this->faker->imageUrl(240, 240, 'foods'),
         ];
     }
 }

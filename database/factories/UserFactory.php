@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'phone' => 89647583033,
             'whatsapp' => 89647583033,
             'gender' => $this->faker->randomElement(['L', 'P']),
-            'picturePath' => $this->faker->md5 . '.png',
+            'picturePath' => $this->faker->imageUrl(100, 100, 'foods'),
             'role' => $this->faker->randomElement(['customer', 'seller', 'administrator']),
             'remember_token' => Str::random(10),
             'status' => 1,

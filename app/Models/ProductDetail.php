@@ -20,4 +20,14 @@ class ProductDetail extends Model
     {
         return $this->belongsTo(ProductUnit::class);
     }
+
+    /**
+     * Define relationship with the product
+     *
+     * @return void
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

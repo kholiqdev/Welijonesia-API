@@ -6,6 +6,7 @@ use App\Http\Controllers\Customer\Auth\RegisterController;
 use App\Http\Controllers\Customer\Auth\ResendController;
 use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
+use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\FavoritContoller;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ReviewController;
@@ -35,4 +36,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
     Route::post('resend', ResendController::class)->name('customer.resend-verification');
     Route::post('favorit', [FavoritContoller::class, 'storeOrUpdate'])->name('customer.store-update-favorit');
+    Route::post('cart', [CartController::class, 'storeOrUpdate'])->name('customer.store-update-cart');
 });

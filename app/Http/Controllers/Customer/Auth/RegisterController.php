@@ -6,7 +6,6 @@ use App\Events\UserRegistered;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\Auth\RegisterRequest;
-use App\Jobs\SendEmailActivation;
 use App\Models\User;
 use App\Models\Verification;
 use App\Models\Wallet;

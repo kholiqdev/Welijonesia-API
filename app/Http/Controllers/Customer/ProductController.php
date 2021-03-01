@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         try {
             if ($request->has('id')) {
-                $product = Product::with(['seller', 'comodity', 'productdetails.productunit'])->find($request->id);
+                $product = Product::with(['seller', 'comodity.category', 'productdetails.productunit'])->find($request->id);
 
                 if ($product) return ResponseFormatter::success(['product' => $product], 'Product ditemukan');
 
@@ -28,7 +28,7 @@ class ProductController extends Controller
             }
 
             $product = Product::query();
-            $product->with(['seller', 'comodity', 'productdetails.productunit'])->where('seller_id', '=', $request->seller_id);
+            $product->with(['seller', 'comodity.category', 'productdetails.productunit']);
 
             if ($request->has('seller_id')) $product->where('seller_id', $request->seller_id);
 
