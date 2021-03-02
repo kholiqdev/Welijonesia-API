@@ -5,18 +5,34 @@ namespace App\Http\Controllers\Customer;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\DeleteCartRequest;
+use App\Http\Requests\Customer\GetCartRequest;
 use App\Http\Requests\Customer\PostCartRequest;
 use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\ProductDetail;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CartController extends Controller
 {
+    /**
+     * Get Cart from db
+     *
+     * @return json
+     */
+    public function index()
+    {
+        try {
+            $cart = Cart::with(['cartdetails'])->where('user_id', auth()->user()->id)->first();
+
+            if ($cart) return ResponseFormatter::success(['cart' => $cart], count($cart->cartdetails) . ' Keranjang ditemukan');
+
+            return ResponseFormatter::error("Keranjang anda kosong", 400);
+        } catch (Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
+    }
+
     /**
      * Save or Update Cart request from user.
      *
