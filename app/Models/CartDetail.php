@@ -16,4 +16,15 @@ class CartDetail extends Model
      * @var array
      */
     protected $guarded = [];
+
+
+    /**
+     * Define relationship with the cart
+     *
+     * @return void
+     */
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

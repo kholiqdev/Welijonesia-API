@@ -37,4 +37,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('resend', ResendController::class)->name('customer.resend-verification');
     Route::post('favorit', [FavoritContoller::class, 'storeOrUpdate'])->name('customer.store-update-favorit');
     Route::post('cart', [CartController::class, 'storeOrUpdate'])->name('customer.store-update-cart');
+    Route::delete('cart', [CartController::class, 'destroy'])->name('customer.destroy-cart');
 });
