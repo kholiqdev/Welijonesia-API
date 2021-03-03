@@ -15,7 +15,7 @@ class PostCartRequest extends FormRequest
      */
     protected const VALIDATION_RULES = [
         'product_detail' => 'required|string|min:35|max:37',
-        'qty' => 'required|numeric',
+        'qty' => 'required|numeric|min:1',
     ];
 
     /**

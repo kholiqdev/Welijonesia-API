@@ -23,7 +23,7 @@ class CartController extends Controller
     public function index()
     {
         try {
-            $cart = Cart::with(['cartdetails'])->where('user_id', auth()->user()->id)->first();
+            $cart = Cart::with(['cartdetails.productdetail.productunit', 'cartdetails.productdetail.product.comodity.category', 'seller'])->where('user_id', auth()->user()->id)->first();
 
             if ($cart) return ResponseFormatter::success(['cart' => $cart], count($cart->cartdetails) . ' Keranjang ditemukan');
 

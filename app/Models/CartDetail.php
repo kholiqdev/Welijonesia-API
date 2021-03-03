@@ -27,4 +27,14 @@ class CartDetail extends Model
     {
         return $this->belongsTo(Cart::class);
     }
+
+    /**
+     * Define relationship with the product detail
+     *
+     * @return void
+     */
+    public function productDetail()
+    {
+        return $this->belongsTo(ProductDetail::class);
+    }
 }

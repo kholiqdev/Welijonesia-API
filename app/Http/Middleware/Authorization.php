@@ -27,6 +27,7 @@ class Authorization
                 return ResponseFormatter::error([], 'User tidak ditemukan', Response::HTTP_UNAUTHORIZED);
             }
         } catch (TokenExpiredException $e) {
+            if ($request->routeIs('auth.refresh')) return $next($request);
             return ResponseFormatter::error('Token Expired', Response::HTTP_UNAUTHORIZED);
         } catch (TokenInvalidException $e) {
             return ResponseFormatter::error('Token Invalid', Response::HTTP_UNAUTHORIZED);

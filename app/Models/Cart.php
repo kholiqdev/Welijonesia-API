@@ -27,4 +27,14 @@ class Cart extends Model
     {
         return $this->hasMany(CartDetail::class);
     }
+
+    /**
+     * Define relationship with the seller
+     *
+     * @return void
+     */
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 }
