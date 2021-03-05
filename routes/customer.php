@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
 use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\RegisterController;
@@ -41,4 +42,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::delete('cart', [CartController::class, 'destroy'])->name('customer.destroy-cart');
     Route::get('cart', [CartController::class, 'index'])->name('customer.get-cart');
     Route::get('payment-method', PaymentMethodController::class)->name('customer.payment-method');
+    Route::get('address', [AddressController::class, 'index'])->name('customer.get-address');
 });
