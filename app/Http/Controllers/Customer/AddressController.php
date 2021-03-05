@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Customer;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\GetAddressRequest;
+use App\Http\Requests\Customer\PostAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -14,7 +16,7 @@ class AddressController extends Controller
      * Display a listing of the resource.
      *
      * @param GetAddressRequest $request
-     * @return \Illuminate\Http\Response
+     * @return json
      */
     public function index(GetAddressRequest $request)
     {
@@ -36,48 +38,37 @@ class AddressController extends Controller
             return ResponseFormatter::error($e->getMessage(), 400);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  PostAddressRequest  $request
+     * @return json
      */
-    public function store(Request $request)
+    public function store(PostAddressRequest $request)
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            if ($request->status == 1) {
+                Address::where('user_id', auth()->user()->id)->update([
+                    'status' => 0
+                ]);
+            }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+            $address = Address::create([
+                'user_id' => auth()->user()->id,
+                'village_id' => $request->village,
+                'name' => $request->name,
+                'address' => $request->address,
+                'status' => $request->status,
+            ]);
+
+            DB::commit();
+            return ResponseFormatter::success(['address' => $address], 'Berhasil ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 
     /**

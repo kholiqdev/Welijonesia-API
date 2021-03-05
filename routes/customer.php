@@ -43,4 +43,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::get('cart', [CartController::class, 'index'])->name('customer.get-cart');
     Route::get('payment-method', PaymentMethodController::class)->name('customer.payment-method');
     Route::get('address', [AddressController::class, 'index'])->name('customer.get-address');
+    Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
 });
