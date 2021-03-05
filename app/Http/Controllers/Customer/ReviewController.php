@@ -20,7 +20,7 @@ class ReviewController extends Controller
         try {
             $review = Review::query();
             $review->with(['user']);
-            
+
             if ($request->has('seller_id')) $review->where('seller_id', $request->seller_id);
             if ($request->has('product_id')) $review->where('product_id', $request->product_id);
 
@@ -28,7 +28,6 @@ class ReviewController extends Controller
 
             return ResponseFormatter::success(
                 ['review' => $review->paginate($limit)],
-
                 $review->count() . ' Ulasan ditemukan'
             );
         } catch (\Exception $e) {

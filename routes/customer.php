@@ -8,6 +8,7 @@ use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\FavoritContoller;
+use App\Http\Controllers\Customer\PaymentMethodController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
@@ -39,4 +40,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('cart', [CartController::class, 'storeOrUpdate'])->name('customer.store-update-cart');
     Route::delete('cart', [CartController::class, 'destroy'])->name('customer.destroy-cart');
     Route::get('cart', [CartController::class, 'index'])->name('customer.get-cart');
+    Route::get('payment-method', PaymentMethodController::class)->name('customer.payment-method');
 });
