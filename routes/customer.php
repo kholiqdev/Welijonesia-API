@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\FavoritContoller;
 use App\Http\Controllers\Customer\PaymentMethodController;
 use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Customer\ProvinceController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::post('reset-password', ResetPassword::class)->name('customer.reset-passwo
 Route::get('seller', [SellerController::class, 'index'])->name('customer.get-seller');
 Route::get('review', [ReviewController::class, 'index'])->name('customer.get-review');
 Route::get('product', ProductController::class)->name('customer.get-produk');
+Route::get('province', ProvinceController::class)->name('customer.get-province');
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
