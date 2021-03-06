@@ -15,7 +15,7 @@ class GetCityRequest extends FormRequest
      */
     protected const VALIDATION_RULES = [
         'id' => 'integer|min:3',
-        'province' => 'required|integer|min:1',
+        'province' => 'required_without:id|integer|min:1',
     ];
 
     /**
