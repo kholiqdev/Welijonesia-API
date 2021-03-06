@@ -15,7 +15,7 @@ class GetVillageRequest extends FormRequest
      */
     protected const VALIDATION_RULES = [
         'id' => 'integer|min:9',
-        'district' => 'required|integer|min:7',
+        'district' => 'required_without:id|integer|min:7',
     ];
 
     /**

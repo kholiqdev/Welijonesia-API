@@ -16,6 +16,7 @@ use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProvinceController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
+use App\Http\Controllers\Customer\VillageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::get('product', ProductController::class)->name('customer.get-produk');
 Route::get('province', ProvinceController::class)->name('customer.get-province');
 Route::get('city', CityController::class)->name('customer.get-city');
 Route::get('district', DistrictController::class)->name('customer.get-district');
+Route::get('village', VillageController::class)->name('customer.get-village');
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');

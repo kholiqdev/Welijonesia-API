@@ -2,19 +2,36 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Customer\GetVillageRequest;
+use App\Models\Village;
 
 class VillageController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  GetVillageRequest  $request
+     * @return json
      */
-    public function __invoke(Request $request)
+    public function __invoke(GetVillageRequest $request)
     {
-        //
+        try {
+            if ($request->has('id')) {
+                $village = Village::find($request->id);
+
+                if ($village) return ResponseFormatter::success(['village' => $village], 'Desa/Kelurahan ditemukan');
+
+                return ResponseFormatter::error("Desa/Kelurahan tidak ditemukan", 400);
+            }
+            $village = Village::where('district_id', $request->district)->get();
+            return ResponseFormatter::success(
+                ['village' => $village],
+                $village->count() . ' Desa/Kelurahan ditemukan'
+            );
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 }
