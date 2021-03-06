@@ -15,7 +15,7 @@ class GetDistrictRequest extends FormRequest
      */
     protected const VALIDATION_RULES = [
         'id' => 'integer|min:7',
-        'city' => 'required|integer|min:3',
+        'city' => 'required_without:id|integer|min:3',
     ];
 
     /**

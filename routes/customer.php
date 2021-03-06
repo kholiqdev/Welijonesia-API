@@ -9,6 +9,7 @@ use App\Http\Controllers\Customer\Auth\ResetPassword;
 use App\Http\Controllers\Customer\Auth\VerificationController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CityController;
+use App\Http\Controllers\Customer\DistrictController;
 use App\Http\Controllers\Customer\FavoritContoller;
 use App\Http\Controllers\Customer\PaymentMethodController;
 use App\Http\Controllers\Customer\ProductController;
@@ -37,6 +38,7 @@ Route::get('review', [ReviewController::class, 'index'])->name('customer.get-rev
 Route::get('product', ProductController::class)->name('customer.get-produk');
 Route::get('province', ProvinceController::class)->name('customer.get-province');
 Route::get('city', CityController::class)->name('customer.get-city');
+Route::get('district', DistrictController::class)->name('customer.get-district');
 
 Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('verification', VerificationController::class)->name('customer.verification');
