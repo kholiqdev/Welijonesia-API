@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     use HasFactory, UsesUuid;
+
+    /**
+     * The attributes that cannot mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 }

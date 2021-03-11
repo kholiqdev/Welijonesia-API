@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CityController;
 use App\Http\Controllers\Customer\DistrictController;
 use App\Http\Controllers\Customer\FavoritContoller;
+use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\PaymentMethodController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProvinceController;
@@ -37,6 +38,7 @@ Route::post('reset-password', ResetPassword::class)->name('customer.reset-passwo
 Route::get('seller', [SellerController::class, 'index'])->name('customer.get-seller');
 Route::get('review', [ReviewController::class, 'index'])->name('customer.get-review');
 Route::get('product', ProductController::class)->name('customer.get-produk');
+Route::get('payment-method', PaymentMethodController::class)->name('customer.payment-method');
 Route::get('province', ProvinceController::class)->name('customer.get-province');
 Route::get('city', CityController::class)->name('customer.get-city');
 Route::get('district', DistrictController::class)->name('customer.get-district');
@@ -49,7 +51,7 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('cart', [CartController::class, 'storeOrUpdate'])->name('customer.store-update-cart');
     Route::delete('cart', [CartController::class, 'destroy'])->name('customer.destroy-cart');
     Route::get('cart', [CartController::class, 'index'])->name('customer.get-cart');
-    Route::get('payment-method', PaymentMethodController::class)->name('customer.payment-method');
     Route::get('address', [AddressController::class, 'index'])->name('customer.get-address');
     Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
+    Route::post('order', [OrderController::class, 'store'])->name('customer.store-order');
 });
