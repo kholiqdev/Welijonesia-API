@@ -16,4 +16,14 @@ class OrderDetail extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Define relationship with the product detail
+     *
+     * @return void
+     */
+    public function productDetail()
+    {
+        return $this->belongsTo(ProductDetail::class);
+    }
 }

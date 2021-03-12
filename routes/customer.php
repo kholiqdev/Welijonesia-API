@@ -54,4 +54,5 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::get('address', [AddressController::class, 'index'])->name('customer.get-address');
     Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
     Route::post('order', [OrderController::class, 'store'])->name('customer.store-order');
+    Route::get('order', [OrderController::class, 'index'])->name('customer.get-order');
 });

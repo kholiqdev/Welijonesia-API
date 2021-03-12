@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\GetOrderRequest;
 use App\Http\Requests\Customer\PostOrderRequest;
 use App\Models\Address;
 use App\Models\Billing;
@@ -19,11 +20,35 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param GetOrderRequest $request
+     * @return json
      */
-    public function index()
+    public function index(GetOrderRequest $request)
     {
-        //
+        try {
+            if ($request->has('id')) {
+                $order = Order::with(['user', 'seller', 'orderdetails.productdetail.productunit'])->where('user_id', auth()->user()->id)->find($request->id);
+
+                if ($order) return ResponseFormatter::success($order, 'Data Pemesanan berhasil diambil');
+
+                return ResponseFormatter::error("Data Pemesanan tidak ditemukan", 400);
+            }
+
+            $orders = Order::query();
+
+            if ($request->has('status')) return $orders->where('status', $request->status);
+
+            $limit = $request->input('limit', 6);
+
+            $orders->with(['user', 'seller', 'orderdetails.productdetail.productunit'])->where('user_id', auth()->user()->id);
+
+            return ResponseFormatter::success(
+                $orders->paginate($limit),
+                'Data list pemesaan berhasil diambil'
+            );
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 
     /**
@@ -50,7 +75,7 @@ class OrderController extends Controller
 
             if (!$cart) return ResponseFormatter::error('Keranjang anda kosong', 400);
 
-            if ($request->shipping_method == 1) {
+            if ($request->shipping_method == 0) {
                 $address = Address::where('user_id', auth()->user()->id)->first();
 
                 if (!$address) return ResponseFormatter::error('Alamat tidak ditemukan', 400);
@@ -92,9 +117,9 @@ class OrderController extends Controller
                 $cart->delete();
                 $cart->cartdetails()->delete();
 
-                if ($billing) return ResponseFormatter::success(['order' => $order, 'payment' => $billing], 'Pemesanan berhasil, silahkan lakukan pembayaran');
-
                 DB::commit();
+
+                if ($billing) return ResponseFormatter::success(['order' => $order, 'payment' => $billing], 'Pemesanan berhasil, silahkan lakukan pembayaran');
             }
 
             return ResponseFormatter::error('Pemesanan tidak berhasil, harap periksa kembali', 400);
