@@ -15,7 +15,6 @@ class CreateBillingsTable extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignUuid('payment_method_id')->constrained('payment_methods')->onUpdate('cascade')->onDelete('cascade');
             $table->string('picturePath')->nullable();
             $table->unsignedInteger('total');

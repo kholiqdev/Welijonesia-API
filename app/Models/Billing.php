@@ -16,4 +16,14 @@ class Billing extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Define relationship with the payment_method
+     *
+     * @return void
+     */
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

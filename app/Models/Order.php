@@ -29,6 +29,16 @@ class Order extends Model
     }
 
     /**
+     * Define relationship with the billing
+     *
+     * @return void
+     */
+    public function billings()
+    {
+        return $this->hasMany(Billing::class);
+    }
+
+    /**
      * Define relationship with the seller
      *
      * @return void

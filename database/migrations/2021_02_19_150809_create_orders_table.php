@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignUuid('seller_id')->constrained('sellers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('billing_id')->constrained('billings')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedTinyInteger('shipping_method')->default(0)->comment('0=Diantar,1=Ambil Sendiri');
             $table->foreignId('village_id')->nullable()->constrained('villages')->onUpdate('cascade')->onDelete('cascade');
             $table->string('customer_addressName')->nullable();

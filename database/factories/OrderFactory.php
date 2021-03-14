@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Billing;
 use App\Models\Order;
 use App\Models\Seller;
 use App\Models\User;
@@ -28,6 +29,7 @@ class OrderFactory extends Factory
             'id' => $this->faker->uuid,
             'user_id' => User::factory(),
             'seller_id' => Seller::factory(),
+            'billing_id' => Billing::factory(),
             'shipping_method' => $this->faker->randomElement([0, 1]),
             'village_id' => Village::all()->random()->id,
             'customer_addressName' => $this->faker->randomElement(['Home', 'Office', 'Hotel', 'Kost']),
