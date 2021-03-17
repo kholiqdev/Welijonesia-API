@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(5)->create();
         Comodity::factory(5)->create();
         ComodityDetail::factory(5)->create();
-        Order::factory(5)->create();
+        Order::factory(5)->hasOrderDetails(5)->create();
         OrderDetail::factory(5)->create();
         Billing::factory(5)->create();
         PaymentMethod::factory(5)->create();

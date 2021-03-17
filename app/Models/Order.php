@@ -33,9 +33,9 @@ class Order extends Model
      *
      * @return void
      */
-    public function billings()
+    public function billing()
     {
-        return $this->hasMany(Billing::class);
+        return $this->belongsTo(Billing::class);
     }
 
     /**

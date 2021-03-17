@@ -11,7 +11,6 @@ use App\Models\Billing;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +26,7 @@ class OrderController extends Controller
     {
         try {
             if ($request->has('id')) {
-                $order = Order::with(['user', 'seller', 'orderdetails.productdetail.productunit'])->where('user_id', auth()->user()->id)->find($request->id);
+                $order = Order::with(['user', 'seller', 'billing.paymentmethod', 'orderdetails.productdetail.productunit', 'orderdetails.productdetail.product.comodity.category'])->where('user_id', auth()->user()->id)->find($request->id);
 
                 if ($order) return ResponseFormatter::success($order, 'Data Pemesanan berhasil diambil');
 
@@ -40,10 +39,10 @@ class OrderController extends Controller
 
             $limit = $request->input('limit', 6);
 
-            $orders->with(['user', 'seller', 'orderdetails.productdetail.productunit'])->where('user_id', auth()->user()->id);
+            $orders->with(['user', 'seller', 'billing.paymentmethod', 'orderdetails.productdetail.productunit', 'orderdetails.productdetail.product.comodity.category'])->where('user_id', auth()->user()->id);
 
             return ResponseFormatter::success(
-                $orders->paginate($limit),
+                ['order' => $orders->paginate($limit)],
                 'Data list pemesaan berhasil diambil'
             );
         } catch (\Exception $e) {
@@ -81,9 +80,16 @@ class OrderController extends Controller
                 if (!$address) return ResponseFormatter::error('Alamat tidak ditemukan', 400);
             }
 
+            $billing = Billing::create([
+                'payment_method_id' => $request->payment_method,
+                'total' => $cart->total,
+                'status' => 0
+            ]);
+
             $order = Order::create([
                 'user_id' => $cart->user_id,
                 'seller_id' => $cart->seller_id,
+                'billing_id' => $billing->id,
                 'shipping_method' => $request->input('shipping_method', 0),
                 'village_id' => $address->village_id ?? null,
                 'customer_addressName' => $address->name ?? null,
@@ -107,19 +113,12 @@ class OrderController extends Controller
                     }
                 }
 
-                $billing = Billing::create([
-                    'order_id' => $order->id,
-                    'payment_method_id' => $request->payment_method,
-                    'total' => $cart->total,
-                    'status' => 0
-                ]);
-
                 $cart->delete();
                 $cart->cartdetails()->delete();
 
                 DB::commit();
 
-                if ($billing) return ResponseFormatter::success(['order' => $order, 'payment' => $billing], 'Pemesanan berhasil, silahkan lakukan pembayaran');
+                return ResponseFormatter::success(['order' => $order, 'payment' => $billing], 'Pemesanan berhasil, silahkan lakukan pembayaran');
             }
 
             return ResponseFormatter::error('Pemesanan tidak berhasil, harap periksa kembali', 400);

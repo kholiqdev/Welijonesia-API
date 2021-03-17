@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Helpers\ResponseFormatter;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -32,6 +33,8 @@ class Authorization
         } catch (TokenInvalidException $e) {
             return ResponseFormatter::error('Token Invalid', Response::HTTP_UNAUTHORIZED);
         } catch (JWTException $e) {
+            return ResponseFormatter::error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+        } catch (Exception $e) {
             return ResponseFormatter::error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
