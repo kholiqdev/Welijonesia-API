@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\UpdateUserRequest;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -69,13 +70,30 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  UpdateUserRequest  $request
+     * @return json
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request)
     {
-        //
+        try {
+            $userArr = [];
+            if ($request->has('name')) {
+                $userArr['name'] = $request->name;
+            }
+            if ($request->has('gender')) {
+                $userArr['gender'] = $request->gender;
+            }
+            if ($request->has('phone')) {
+                $userArr['phone'] = $request->phone;
+            }
+            if (!empty($userArr)) {
+                auth()->user()->update($userArr);
+                return ResponseFormatter::success(['user' => auth()->user()], 'Profil berhasil diubah');
+            }
+            return ResponseFormatter::error('Gagal memperbarui profil', 400);
+        } catch (Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 
     /**
