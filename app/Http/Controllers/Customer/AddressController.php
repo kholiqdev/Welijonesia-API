@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\DeleteAddressRequest;
 use App\Http\Requests\Customer\GetAddressRequest;
 use App\Http\Requests\Customer\PostAddressRequest;
 use App\Models\Address;
@@ -86,11 +87,16 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  DeleteAddressRequest  $request
+     * @return json
      */
-    public function destroy($id)
+    public function destroy(DeleteAddressRequest $request)
     {
-        //
+        try {
+            $address = Address::where('user_id', auth()->user()->id)->where('id', $request->id)->delete();
+            return ResponseFormatter::success(['address' => $address], 'Alamat berhasil dihapus');
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 }

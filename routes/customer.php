@@ -55,6 +55,7 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::get('cart', [CartController::class, 'index'])->name('customer.get-cart');
     Route::get('address', [AddressController::class, 'index'])->name('customer.get-address');
     Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
+    Route::delete('address/delete', [AddressController::class, 'destroy'])->name('customer.delete-address');
     Route::post('order', [OrderController::class, 'store'])->name('customer.store-order');
     Route::get('order', [OrderController::class, 'index'])->name('customer.get-order');
     Route::post('order/cancel', [OrderController::class, 'cancel'])->name('customer.cancel-order');
