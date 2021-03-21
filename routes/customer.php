@@ -57,6 +57,7 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
     Route::post('order', [OrderController::class, 'store'])->name('customer.store-order');
     Route::get('order', [OrderController::class, 'index'])->name('customer.get-order');
+    Route::post('order/cancel', [OrderController::class, 'cancel'])->name('customer.cancel-order');
     Route::get('user', [UserController::class, 'index'])->name('customer.get-user');
     Route::post('change-password', ChangePasswordController::class)->name('customer.change-password');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\CancelOrderRequest;
 use App\Http\Requests\Customer\GetOrderRequest;
 use App\Http\Requests\Customer\PostOrderRequest;
 use App\Models\Address;
@@ -171,5 +172,28 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  CancelOrderRequest $request
+     * @return json
+     */
+    public function cancel(CancelOrderRequest $request)
+    {
+        try {
+            $order = Order::whereBetween('status', [0, 1])->where('user_id', '=', auth()->user()->id)->find($request->id);
+
+            if ($order) {
+                $order->update([
+                    'status' => 7
+                ]);
+                return ResponseFormatter::success($order, 'Pemesanan anda berhasil dibatalkan');
+            }
+            return ResponseFormatter::error("Pesanan anda tidak bisa dibatalkan", 400);
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e->getMessage(), 400);
+        }
     }
 }
