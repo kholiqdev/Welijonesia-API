@@ -6,6 +6,7 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\GetSellerRequest;
 use App\Models\Seller;
+use Exception;
 use Illuminate\Database\QueryException;
 
 class SellerController extends Controller
@@ -43,7 +44,7 @@ class SellerController extends Controller
                 ['seller' => $seller->paginate($limit)],
                 $seller->count() . ' penjual ditemukan'
             );
-        } catch (QueryException $e) {
+        } catch (Exception $e) {
             return ResponseFormatter::error($e->getMessage(), 400);
         }
     }

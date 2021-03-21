@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\Auth\ChangePasswordController;
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
 use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\RegisterController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProvinceController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\SellerController;
+use App\Http\Controllers\Customer\UserController;
 use App\Http\Controllers\Customer\VillageController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,4 +57,6 @@ Route::middleware(['auth.api', 'role:customer'])->group(function () {
     Route::post('address', [AddressController::class, 'store'])->name('customer.store-address');
     Route::post('order', [OrderController::class, 'store'])->name('customer.store-order');
     Route::get('order', [OrderController::class, 'index'])->name('customer.get-order');
+    Route::get('user', [UserController::class, 'index'])->name('customer.get-user');
+    Route::post('change-password', ChangePasswordController::class)->name('customer.change-password');
 });

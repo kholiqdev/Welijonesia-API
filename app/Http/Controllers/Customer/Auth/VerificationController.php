@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Customer\Auth;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\Auth\VerificationRequest;
-use App\Models\User;
 use App\Models\Verification;
 use Illuminate\Database\QueryException;
 
