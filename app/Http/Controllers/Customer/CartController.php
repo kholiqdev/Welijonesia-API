@@ -103,6 +103,10 @@ class CartController extends Controller
 
                 $cartDetail->delete();
 
+                $cart = Cart::with(['cartdetails'])->where('user_id', auth()->user()->id)->first();
+
+                if (count($cart->cartdetails) <= 0) $cart->delete();
+
                 return ResponseFormatter::success($cartDetail, 'Keranjang berhasil dihapus');
             } else {
                 $cart = Cart::where('user_id', auth()->user()->id)->delete();
